@@ -1,6 +1,7 @@
-import { useState, useContext } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import AuthContext from "../contexts/AuthContext";
+import { useDispatch, useSelector } from "react-redux";
+import { userLogin } from "../app/features/user/userActions";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
@@ -21,10 +22,17 @@ const initialStateLogin = {
 };
 
 const LoginPage = () => {
-  const navigate = useNavigate();
   const [login, setLogin] = useState(initialStateLogin);
-  const [error, setError] = useState("");
-  const { signin } = useContext(AuthContext);
+  const [loginError, setLoginError] = useState("");
+  const dispatch = useDispatch();
+  const { success, loading, error } = useSelector((state) => state.user);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (success) {
+      navigate("/");
+    }
+  }, [navigate, success]);
 
   const handleChange = (e) => {
     setLogin({
@@ -35,17 +43,18 @@ const LoginPage = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setError("");
-    try {
-      await signin(login.email, login.password);
+    setLoginError("");
+    dispatch(userLogin(login));
+    if (success) {
       setLogin(initialStateLogin);
       navigate("/home");
-    } catch (error) {
-      console.log(error.code);
-      if (error.code === "auth/internal-error") {
-        setError("Invalid email");
-      } //more validations here!
     }
+
+    if (error === "auth/internal-error") {
+      setLoginError("Invalid email");
+    } else if (error === "auth/wrong-password") {
+      setLoginError("Wrong password");
+    } //more validations here!
   };
 
   return (
@@ -66,11 +75,13 @@ const LoginPage = () => {
           <Typography component="h1" variant="h5">
             Sign in
           </Typography>
+
           {error && (
             <Alert variant="filled" severity="error">
-              {error.message}
+              {loginError}
             </Alert>
           )}
+
           <Box
             component="form"
             onSubmit={handleSubmit}
@@ -110,6 +121,7 @@ const LoginPage = () => {
               fullWidth
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
+              disabled={loading}
             >
               Sign In
             </Button>

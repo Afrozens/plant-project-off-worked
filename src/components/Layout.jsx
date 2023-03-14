@@ -25,7 +25,7 @@ const Layout = () => {
       <CacheProvider value={myCache}>
         <ThemeProvider theme={theme}>
           <Header />
-          <section className="min-h-screen w-full bg-slate-100 px-12 pt-6">
+          <section className="min-h-screen w-full bg-slate-100 px-12 pt-6 lg:px-36 md:px-16">
             <Outlet />
           </section>
         </ThemeProvider>

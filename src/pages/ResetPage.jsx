@@ -1,7 +1,7 @@
 import { Alert, Box, Button, Container, TextField, Typography } from "@mui/material";
 import { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import AuthContext from "../contexts/AuthContext";
+import AuthContext from "../contexts/Auth/AuthContext";
 
 const ResetPage = () => {
   const [error, setError] = useState("");

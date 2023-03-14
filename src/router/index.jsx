@@ -7,6 +7,7 @@ import LoginPage from "../pages/LoginPage";
 import RegisterPage from "../pages/RegisterPage";
 import HomePage from "../pages/HomePage";
 import ResetPage from "../pages/ResetPage";
+import ProfilePage from "../pages/ProfilePage";
 
 export const router = createBrowserRouter([
   {
@@ -38,6 +39,14 @@ export const router = createBrowserRouter([
             element: (
               <ProtectedRoute>
                 <HomePage />
+              </ProtectedRoute>
+            ),
+          },
+          {
+            path: "/user-profile",
+            element: (
+              <ProtectedRoute>
+                <ProfilePage />
               </ProtectedRoute>
             ),
           },
