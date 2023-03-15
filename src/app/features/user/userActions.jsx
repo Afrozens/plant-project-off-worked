@@ -1,5 +1,9 @@
-import { userServices } from "./userServices";
-import { signin } from "../../../contexts/Auth/AuthServices";
+import { userServices } from "./userServicesConfig";
+import {
+  signin,
+  signup,
+  updateUser,
+} from "../../../contexts/Auth/AuthServices";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 
 export const userLogin = createAsyncThunk(
@@ -23,30 +27,27 @@ export const userLogin = createAsyncThunk(
     }
   }
 );
-/* 
-export const userGetDetails = createAsyncThunk(
-  userServices.userGet,
-  async (arg, { getState, rejectWithValue }) => {
+
+export const userRegister = createAsyncThunk(
+  userServices.userRegister,
+  async ({ username, email, password }, { rejectWithValue }) => {
     try {
-      const { user } = getState();
-      const currentUser = unSubscribe();
-      if (currentUser) {
-        const { accessToken, uid, email, displayName } = currentUser;
-        if (user.jwtToken === accessToken) {
-          const info = {
-            username: displayName,
-            email,
-            uid,
-          };
-          console.log(info);
-          return info;
-        }
-      }
+      const { user } = await signup(email, password);
+      updateUser(username);
+
+      localStorage.setItem("JWT", user.accessToken);
+
+      const info = {
+        username: username,
+        email: user.email,
+        uid: user.uid,
+      };
+
+      return info;
     } catch (error) {
       if (error) {
-        return rejectWithValue(error.message);
+        return rejectWithValue(error.code);
       }
     }
   }
 );
- */

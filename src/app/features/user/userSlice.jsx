@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import {  userLogin } from "./userActions";
+import { userLogin, userRegister } from "./userActions";
 
 const jwtToken = localStorage.getItem("JWT")
   ? localStorage.getItem("JWT")
@@ -29,8 +29,7 @@ const userSlice = createSlice({
       state.error = null;
       state.success = false;
     },
-    userGet: (state, {payload}) => {
-      console.log(payload)
+    userGet: (state, { payload }) => {
       state.loading = false;
       state.userInfo = {
         username: payload.username,
@@ -40,24 +39,44 @@ const userSlice = createSlice({
       state.success = true;
     },
   },
-  extraReducers: {
-    [userLogin.pending]: (state) => {
-      state.loading = true;
-      state.error = null;
-    },
-    [userLogin.fulfilled]: (state, { payload }) => {
-      state.loading = false;
-      state.userInfo = {
-        username: payload.username,
-        email: payload.email,
-        uid: payload.uid,
-      };
-      state.success = true;
-    },
-    [userLogin.rejected]: (state, { payload }) => {
-      state.loading = false;
-      state.error = payload;
-    },
+  extraReducers: (builder) => {
+    builder
+      .addCase(userLogin.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(userLogin.fulfilled, (state, { payload }) => {
+        state.loading = false;
+        state.userInfo = {
+          username: payload.username,
+          email: payload.email,
+          uid: payload.uid,
+        };
+        state.error = null;
+        state.success = true;
+      })
+      .addCase(userLogin.rejected, (state, { payload }) => {
+        state.loading = false;
+        state.error = payload;
+      })
+      .addCase(userRegister.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(userRegister.fulfilled, (state, { payload }) => {
+        state.loading = false;
+        state.userInfo = {
+          username: payload.username,
+          email: payload.email,
+          uid: payload.uid,
+        };
+        state.error = null;
+        state.success = true;
+      })
+      .addCase(userRegister.rejected, (state, { payload }) => {
+        state.loading = false;
+        state.error = payload;
+      });
   },
 });
 

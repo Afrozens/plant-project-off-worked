@@ -1,6 +1,6 @@
-import React, { useContext, useState } from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import AuthContext from "../contexts/Auth/AuthContext";
+import { useDispatch } from "react-redux";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
@@ -13,8 +13,10 @@ import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import GrassIcon from "@mui/icons-material/Grass";
+import { userRegister } from "../app/features/user/userActions";
 
 const initialStateRegister = {
+  username: "",
   email: "",
   password: "",
 };
@@ -22,8 +24,9 @@ const initialStateRegister = {
 const RegisterPage = () => {
   const [register, setRegister] = useState(initialStateRegister);
   const [error, setError] = useState("");
-  const { signup } = useContext(AuthContext);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  console.log(register);
 
   const handleChange = (e) => {
     setRegister({
@@ -31,19 +34,13 @@ const RegisterPage = () => {
       [e.target.name]: e.target.value,
     });
   };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError("");
-    try {
-      await signup(register.email, register.password);
-      setRegister(initialStateRegister);
-      navigate("/home");
-    } catch (error) {
-      console.log(error.code);
-      if (error.code === "auth/internal-error") {
-        setError("Invalid email");
-      } //more validations here!
-    }
+    dispatch(userRegister(register));
+    setRegister(initialStateRegister);
+    navigate("/home");
   };
 
   return (
@@ -78,13 +75,14 @@ const RegisterPage = () => {
             <Grid container>
               <Grid item xs={12} sx={{ mb: 3 }}>
                 <TextField
-                  autoComplete="given-name"
+                  autoComplete="name"
                   name="username"
                   required
                   fullWidth
                   id="username"
                   label="Username"
-                  autoFocus
+                  onChange={handleChange}
+                  value={register.username}
                 />
               </Grid>
               <Grid item xs={12} sx={{ mb: 3 }}>
@@ -123,7 +121,11 @@ const RegisterPage = () => {
             </Button>
             <Grid container justifyContent="flex-end">
               <Grid item>
-                <Link variant="body2" component="button" onClick={() => navigate('/login')}>
+                <Link
+                  variant="body2"
+                  component="button"
+                  onClick={() => navigate("/login")}
+                >
                   Already have an account? Sign in
                 </Link>
               </Grid>

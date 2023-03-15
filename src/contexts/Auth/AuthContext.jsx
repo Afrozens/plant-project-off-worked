@@ -4,7 +4,6 @@ import {
   useEffect,
 } from "react";
 import {
-  createUserWithEmailAndPassword,
   signOut,
   sendPasswordResetEmail,
   onAuthStateChanged,
@@ -16,9 +15,6 @@ const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [accessToken, setAccessToken] = useState(null);
   const [loadingGetUser, setLoadingGetUser] = useState(true);
-
-  const signup = (email, password) =>
-    createUserWithEmailAndPassword(auth, email, password);
 
   const resetPassword = (email) => sendPasswordResetEmail(auth, email);
 
@@ -40,7 +36,6 @@ const AuthProvider = ({ children }) => {
   const logout = () => signOut(auth);
 
   const data = {
-    signup,
     logout,
     resetPassword,
     user,
