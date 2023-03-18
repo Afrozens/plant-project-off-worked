@@ -1,13 +1,14 @@
 import { createBrowserRouter } from "react-router-dom";
-import Layout from "../components/Layout";
-import ErrorPage from "../pages/ErrorPage";
-import { ProtectedRoute } from "../components/ProtectedRoute";
-import LandingPage from "../pages/LandingPage";
-import LoginPage from "../pages/LoginPage";
-import RegisterPage from "../pages/RegisterPage";
-import HomePage from "../pages/HomePage";
-import ResetPage from "../pages/ResetPage";
-import ProfilePage from "../pages/ProfilePage";
+import {
+  ErrorPage,
+  HomePage,
+  LandingPage,
+  LoginPage,
+  RegisterPage,
+  ProfilePage,
+  ResetPage,
+} from "@/pages";
+import { ProtectedRoute, Layout } from "@/components";
 
 export const router = createBrowserRouter([
   {

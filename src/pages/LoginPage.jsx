@@ -1,19 +1,21 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { userLogin } from "../app/features/user/userActions";
-import Avatar from "@mui/material/Avatar";
-import Button from "@mui/material/Button";
-import CssBaseline from "@mui/material/CssBaseline";
-import TextField from "@mui/material/TextField";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import Checkbox from "@mui/material/Checkbox";
-import Link from "@mui/material/Link";
-import Grid from "@mui/material/Grid";
-import Box from "@mui/material/Box";
-import Typography from "@mui/material/Typography";
-import Alert from "@mui/material/Alert";
-import Container from "@mui/material/Container";
+import { userLogin } from "@/app/features/user/userActions";
+import {
+  Avatar,
+  Button,
+  CssBaseline,
+  TextField,
+  FormControlLabel,
+  Checkbox,
+  Link,
+  Grid,
+  Box,
+  Typography,
+  Alert,
+  Container,
+} from "@mui/material";
 import GrassIcon from "@mui/icons-material/Grass";
 
 const initialStateLogin = {
@@ -30,7 +32,7 @@ const LoginPage = () => {
 
   useEffect(() => {
     if (success) {
-      navigate("/");
+      navigate("/home");
     }
   }, [navigate, success]);
 
@@ -45,10 +47,7 @@ const LoginPage = () => {
     e.preventDefault();
     setLoginError("");
     dispatch(userLogin(login));
-    if (success) {
-      setLogin(initialStateLogin);
-      navigate("/home");
-    }
+    setLogin(initialStateLogin);
 
     if (error === "auth/internal-error") {
       setLoginError("Invalid email");

@@ -1,18 +1,20 @@
 import { useNavigate } from "react-router-dom";
 import { useContext, useEffect, useState } from "react";
-import AuthContext from "../contexts/Auth/AuthContext";
-import { userLogout, userGet } from "../app/features/user/userSlice";
+import AuthContext from "@/contexts/AuthContext";
+import { userLogout, userGet } from "@/app/features/user/userSlice";
 import { useDispatch, useSelector } from "react-redux";
 import Drawer from "./Drawer";
-import AppBar from "@mui/material/AppBar";
-import Box from "@mui/material/Box";
-import Toolbar from "@mui/material/Toolbar";
-import Typography from "@mui/material/Typography";
-import IconButton from "@mui/material/IconButton";
-import Button from "@mui/material/Button";
-import AccountCircle from "@mui/icons-material/AccountCircle";
-import MenuItem from "@mui/material/MenuItem";
-import Menu from "@mui/material/Menu";
+import {
+  AppBar,
+  Box,
+  Toolbar,
+  Typography,
+  IconButton,
+  Button,
+  MenuItem,
+  Menu,
+} from "@mui/material";
+import { AccountCircle } from "@mui/icons-material";
 
 export default function MenuAppBar() {
   const [anchorEl, setAnchorEl] = useState(null);
@@ -21,12 +23,12 @@ export default function MenuAppBar() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { jwtToken } = useSelector((state) => state.user);
-  
+
   useEffect(() => {
     if (accessToken) {
-      if (jwtToken === accessToken) {
-        dispatch(userGet(user))
-        console.log(user)
+      if (jwtToken /*  === accessToken */) {
+        dispatch(userGet(user));
+        console.log(user);
       }
     }
   }, [accessToken]);
@@ -52,7 +54,13 @@ export default function MenuAppBar() {
   };
 
   return (
-    <Box sx={{ flexGrow: 1 }}>
+    <Box
+      sx={{
+        flexGrow: 1,
+        boxShadow:
+          "rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px",
+      }}
+    >
       <AppBar position="static" color="primary">
         <Toolbar>
           <Box component="button" sx={{ marginRight: "2rem" }}>

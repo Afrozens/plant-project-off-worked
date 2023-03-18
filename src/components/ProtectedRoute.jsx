@@ -1,13 +1,15 @@
-import { useContext } from 'react'
-import { Navigate } from 'react-router-dom'
-import AuthContext from '../contexts/Auth/AuthContext'
+import { useContext } from "react";
+import { Navigate } from "react-router-dom";
+import { useSelector } from "react-redux";
+import AuthContext from "@/contexts/AuthContext";
 
-export const ProtectedRoute = ({children}) => {
-  const {user, loading} = useContext(AuthContext)
+export const ProtectedRoute = ({ children }) => {
+  const { success } = useSelector((state) => state.user);
+  const { loadingGetUser } = useContext(AuthContext);
 
-  if (loading) return <h1>Loading</h1>
+  if (loadingGetUser) return <h1>Loading</h1>;
 
-  if (!user) return <Navigate to="/" />
+  if (!success) return <Navigate to="/" />;
 
-  return <>{children}</>
-}
+  return <>{children}</>;
+};

@@ -1,18 +1,17 @@
-import { userServices } from "./userServicesConfig";
+import { userServicesConfig } from "@/services/userServicesConfig";
 import {
   signin,
   signup,
   updateUser,
-} from "../../../contexts/Auth/AuthServices";
+} from "@/services/AuthServices"
 import { createAsyncThunk } from "@reduxjs/toolkit";
 
 export const userLogin = createAsyncThunk(
-  userServices.userLogin,
+  userServicesConfig.userLogin,
   async ({ email, password }, { rejectWithValue }) => {
     try {
       const { user } = await signin(email, password);
       localStorage.setItem("JWT", user.accessToken);
-
       const info = {
         username: user.displayName,
         email: user.email,
@@ -29,7 +28,7 @@ export const userLogin = createAsyncThunk(
 );
 
 export const userRegister = createAsyncThunk(
-  userServices.userRegister,
+  userServicesConfig.userRegister,
   async ({ username, email, password }, { rejectWithValue }) => {
     try {
       const { user } = await signup(email, password);

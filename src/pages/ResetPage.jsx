@@ -1,7 +1,14 @@
-import { Alert, Box, Button, Container, TextField, Typography } from "@mui/material";
+import {
+  Alert,
+  Box,
+  Button,
+  Container,
+  TextField,
+  Typography,
+} from "@mui/material";
 import { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import AuthContext from "../contexts/Auth/AuthContext";
+import AuthContext from "@/contexts/AuthContext";
 
 const ResetPage = () => {
   const [error, setError] = useState("");
@@ -15,20 +22,20 @@ const ResetPage = () => {
       if (!error.code) {
         await resetPassword(email);
         setIsAccept(true);
-        setError("")
-        
+        setError("");
+
         setInterval(() => {
-            setIsAccept(false)
-            navigate("/login")
+          setIsAccept(false);
+          navigate("/login");
         }, 3500);
       }
       //Falta notistack
     } catch (error) {
-        if (error.code === "auth/user-not-found") {
-            setError("User not found, try again");
-        } else if (error.code === "auth/invalid-email") {
-            setError("Yout email is invalid, try again")
-        }
+      if (error.code === "auth/user-not-found") {
+        setError("User not found, try again");
+      } else if (error.code === "auth/invalid-email") {
+        setError("Yout email is invalid, try again");
+      }
     }
   };
 
@@ -78,20 +85,16 @@ const ResetPage = () => {
                 >
                   Try Again
                 </Button>
-                {/* <Button
-                  type="submit"
-                  variant="contained"
-                  sx={{ mt: 3, mb: 2 }}
-                  onClick={handleGoLogin}
-                >
-                  Back to Login
-                </Button> */}
               </Box>
             </>
           ) : (
             <>
               {error && (
-                <Alert variant="filled" severity="error" sx={{marginBottom: "1rem"}}>
+                <Alert
+                  variant="filled"
+                  severity="error"
+                  sx={{ marginBottom: "1rem" }}
+                >
                   {error}
                 </Alert>
               )}

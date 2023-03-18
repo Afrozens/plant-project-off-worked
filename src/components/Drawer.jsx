@@ -1,29 +1,31 @@
 import * as React from "react";
-import { Typography } from "@mui/material";
 import { useNavigate } from "react-router-dom";
+import {
+  Typography,
+  Box,
+  Drawer,
+  List,
+  Divider,
+  ListItem,
+  ListItemButton,
+  ListItemIcon,
+  ListItemText,
+} from "@mui/material";
 import ListIcon from "@mui/icons-material/List";
-import Box from "@mui/material/Box";
-import Drawer from "@mui/material/Drawer";
-import List from "@mui/material/List";
-import Divider from "@mui/material/Divider";
-import ListItem from "@mui/material/ListItem";
-import ListItemButton from "@mui/material/ListItemButton";
-import ListItemIcon from "@mui/material/ListItemIcon";
-import ListItemText from "@mui/material/ListItemText";
 import MailIcon from "@mui/icons-material/Mail";
 import HomeIcon from "@mui/icons-material/Home";
 import InfoIcon from "@mui/icons-material/Info";
-import SearchIcon from '@mui/icons-material/Search';
-import HistoryIcon from '@mui/icons-material/History';
-import SettingsIcon from '@mui/icons-material/Settings';
-import DarkModeIcon from '@mui/icons-material/DarkMode';
+import SearchIcon from "@mui/icons-material/Search";
+import HistoryIcon from "@mui/icons-material/History";
+import SettingsIcon from "@mui/icons-material/Settings";
+import DarkModeIcon from "@mui/icons-material/DarkMode";
 
 export default function TemporaryDrawer() {
   const [state, setState] = React.useState({
     left: false,
   });
 
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   const toggleDrawer = (anchor, open) => (event) => {
     if (
@@ -95,7 +97,7 @@ export default function TemporaryDrawer() {
       </List>
       <Divider />
       <List>
-      <ListItem disablePadding>
+        <ListItem disablePadding>
           <ListItemButton>
             <ListItemIcon>
               <SettingsIcon />

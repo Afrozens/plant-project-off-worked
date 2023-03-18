@@ -1,4 +1,4 @@
-export const userServices = {
+export const userServicesConfig = {
     userLogin: "user/loginUser",
     userRegister: "user/registerUser",
 }

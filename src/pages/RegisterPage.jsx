@@ -1,19 +1,21 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
-import Avatar from "@mui/material/Avatar";
-import Button from "@mui/material/Button";
-import CssBaseline from "@mui/material/CssBaseline";
-import TextField from "@mui/material/TextField";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import Checkbox from "@mui/material/Checkbox";
-import Link from "@mui/material/Link";
-import Grid from "@mui/material/Grid";
-import Box from "@mui/material/Box";
-import Typography from "@mui/material/Typography";
-import Container from "@mui/material/Container";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  Avatar,
+  Button,
+  CssBaseline,
+  TextField,
+  FormControlLabel,
+  Checkbox,
+  Link,
+  Grid,
+  Box,
+  Typography,
+  Container,
+} from "@mui/material";
 import GrassIcon from "@mui/icons-material/Grass";
-import { userRegister } from "../app/features/user/userActions";
+import { userRegister } from "@/app/features/user/userActions";
 
 const initialStateRegister = {
   username: "",
@@ -26,7 +28,13 @@ const RegisterPage = () => {
   const [error, setError] = useState("");
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  console.log(register);
+  const { success } = useSelector((state) => state.user);
+
+  useEffect(() => {
+    if (success) {
+      navigate("/home");
+    }
+  }, [navigate, success]);
 
   const handleChange = (e) => {
     setRegister({

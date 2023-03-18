@@ -1,10 +1,9 @@
-import Grid from "@mui/material/Grid";
-import Button from "@mui/material/Button";
+import { Grid, Button } from "@mui/material";
 import ArrowRightAltIcon from "@mui/icons-material/ArrowRightAlt";
-import plantImage from "../assets/plant-one.png";
-import plantImageTwo from "../assets/plant-two.png";
-import plantImageThree from "../assets/plant-three.png";
-import plantImageFour from "../assets/plant-four.png";
+import plantImage from "@/assets/plant-one.png";
+import plantImageTwo from "@/assets/plant-two.png";
+import plantImageThree from "@/assets/plant-three.png";
+import plantImageFour from "@/assets/plant-four.png";
 
 const LandingPage = () => {
   return (
