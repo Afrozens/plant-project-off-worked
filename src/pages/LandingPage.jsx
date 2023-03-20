@@ -5,12 +5,15 @@ import plantImageTwo from "@/assets/plant-two.png";
 import plantImageThree from "@/assets/plant-three.png";
 import plantImageFour from "@/assets/plant-four.png";
 
-const LandingPage = () => {
+const LandingPage = () => { 
   return (
     <>
       <Grid container paddingBottom={"6rem"}>
         <Grid item xs={12} sm={6} paddingBottom={"1rem"}>
-          <img src={plantImage} alt="plant image" />
+          <img
+            src={plantImage}
+            alt="plant image"
+          />
         </Grid>
         <Grid item xs={12} sm={6} paddingBottom={"1rem"} paddingTop={"2rem"}>
           <h1 className="text-3xl font-bold leading-10 tracking-widest mb-4 md:text-4xl lg:text-6xl lg:leading-[5rem] lg:tracking-[0.3rem]">
@@ -33,10 +36,10 @@ const LandingPage = () => {
         <Grid item xs={12}>
           <h2 className="text-xl font-bold text-center leading-10 tracking-widest mb-2 md:text-2xl">
             <a
-              href="https://rapidapi.com/mnai01/api/house-plants2/"
+              href="https://trefle.io/"
               className="hover:underline hover:decoration-lime-700 text-[#C2EBC5]"
             >
-              HOUSE PLANT DATABASE
+              PLANT DATABASE TREFLE
             </a>{" "}
             & RESTful API
           </h2>

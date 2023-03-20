@@ -13,12 +13,14 @@ import {
   Button,
   MenuItem,
   Menu,
+  Avatar,
+  Badge
 } from "@mui/material";
-import { AccountCircle } from "@mui/icons-material";
+import getAvatarString from "../utilities/getAvatarString"
 
 export default function MenuAppBar() {
   const [anchorEl, setAnchorEl] = useState(null);
-  const { success } = useSelector((state) => state.user);
+  const { success, userInfo } = useSelector((state) => state.user);
   const { logout, user, accessToken } = useContext(AuthContext);
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -58,10 +60,10 @@ export default function MenuAppBar() {
       sx={{
         flexGrow: 1,
         boxShadow:
-          "rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px",
+          "rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px"
       }}
     >
-      <AppBar position="static" color="primary">
+      <AppBar position="static" color="primary" sx={{ zIndex: "99" }}>
         <Toolbar>
           <Box component="button" sx={{ marginRight: "2rem" }}>
             <Drawer />
@@ -82,7 +84,9 @@ export default function MenuAppBar() {
                 onClick={handleMenu}
                 color="inherit"
               >
-                <AccountCircle />
+                <Badge color="success" variant="dot">
+                  <Avatar {...getAvatarString(`${userInfo.username}`)} />
+                </Badge>
               </IconButton>
               <Menu
                 id="menu-appbar"

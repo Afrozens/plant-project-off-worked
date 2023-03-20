@@ -77,7 +77,7 @@ export default function TemporaryDrawer() {
           </ListItemButton>
         </ListItem>
 
-        <ListItem disablePadding>
+        <ListItem disablePadding onClick={() => navigate("/search")}>
           <ListItemButton>
             <ListItemIcon>
               <SearchIcon />

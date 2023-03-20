@@ -1,91 +1,39 @@
-import { Grid, TextField, Avatar, Divider, Button } from "@mui/material";
+import { useSelector } from "react-redux";
 import SearchIcon from "@mui/icons-material/Search";
-import GrassIcon from "@mui/icons-material/Grass";
-import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-import TrefleIcon from "@/assets/TrefleIcon.svg";
+import MenuBookIcon from '@mui/icons-material/MenuBook';
+import YardIcon from '@mui/icons-material/Yard';
 
 const HomePage = () => {
+  const { userInfo } = useSelector((state) => state.user);
   return (
-    <main className="">
+    <>
       <div className="flex w-full h-12 justify-between">
-        <h4 className="text-lg tracking-widest">Home / </h4>
-        <h4 className="text-lg tracking-widest">Welcome User</h4>
+        <h4 className="text-lg tracking-widest text-gray-500 mr-16">Home /</h4>
+        <h4 className="text-lg tracking-widest">
+          Welcome <b className=" underline">{userInfo.username}</b>
+        </h4>
       </div>
-      <Grid
-        container
-        columns={16}
-        sx={{
-          justifyContent: "center",
-          height: "12rem",
-          paddingTop: "1rem",
-          marginBottom: "5rem",
-        }}
-      >
-        <Grid
-          item
-          xs={12}
-          sx={{ justifyContent: "center", alignCenter: "center" }}
-        >
-          <div className="flex mb-4">
-            <Avatar sx={{ bgcolor: "primary", marginRight: "0.5rem" }}>
-              <GrassIcon />
-            </Avatar>
-            <Divider orientation="vertical" variant="middle" flexItem />
-            <img
-              src={TrefleIcon}
-              alt="trefle icon"
-              className="w-10 h-10 ml-2"
-            />
-          </div>
-
-          <h2 className="text-2xl font-bold leading-10 tracking-widest mb-6 sm:text-4xl ">
-            Find Your{" "}
-            <b className="underline decoration-[#629b65] text-[#629b65]">
-              Plant
-            </b>
-          </h2>
-        </Grid>
-        <Grid item xs={12}>
-          <TextField
-            id="search-plant"
-            label="Search now"
-            variant="filled"
-            color="success"
-            sx={{ marginBottom: "1rem", width: "100%" }}
-          />
-          <Button
-            variant="contained"
-            endIcon={<SearchIcon />}
-            sx={{ margin: "0, auto" }}
-          >
-            Search
-          </Button>
-        </Grid>
-      </Grid>
-      <Grid container columns={16}>
-        <Grid item xs={12}>
-          <h3 className="font-bold text-lg my-8">
-            Plant <b className="text-[#629b65] mx-2">Botanical data</b>
-          </h3>
-        </Grid>
-        <div className="w-full h-full bg-slate-200 mx-auto flex items-center flex-col ">
-          <div className="w-full height-36 flex justify-between items-center my-4 ">
-            <span className="ml-4">10 Result</span>{" "}
-            <Button
-              variant="contained"
-              endIcon={<ExpandMoreIcon />}
-              color="info"
-              sx={{ marginRight: "1rem" }}
-            >
-              Sort
-            </Button>
-          </div>
-          <div className="w-full grid grid-cols-1 sm:grid-cols-2 sm:gap-2 md:grid-cols-3 md:gap-2 lg:grid-cols-4 lg:gap-2 xl:gap-4 sm:px-4">
-           
-          </div>
+      <h2 className="uppercase text-2xl font-bold text-center my-8 sm:text-3xl lg:text-5xl">
+        OVER 10,000+ SPECIES OF PLANTS AVAILABLE!
+      </h2>
+      <div className="w-full grid grid-cols-1 sm:grid-cols-2 sm:gap-2 md:grid-cols-3 md:gap-6  xl:gap-4 sm:px-4 justify-center">
+        <div className="flex flex-col text-center p-6">
+          <SearchIcon color="primary" sx={{ margin: "0 auto", width: "36px", height: "36px" }} />
+          <h4 className="text-2xl font-semibold tracking-widest my-2 lg:text-3xl">Researchers</h4>
+          <p className="text-gray-600 text-xl lg:text-2xl">Search over (almost) all the plants of the world over multiple criterias, and get up-to-date informations, taxonomical references and more</p>
         </div>
-      </Grid>
-    </main>
+        <div className="flex flex-col text-center p-6">
+          <MenuBookIcon color="primary" sx={{ margin: "0 auto", width: "36px", height: "36px" }} />
+          <h4 className="text-2xl font-semibold tracking-widest my-2 lg:text-3xl">Students</h4>
+          <p className="text-gray-600 text-xl lg:text-2xl">Get in touch! We try to support educational projects as much as we can!</p>
+        </div>
+        <div className="flex flex-col text-center p-6">
+          <YardIcon color="primary" sx={{ margin: "0 auto", width: "36px", height: "36px" }} />
+          <h4 className="text-2xl font-semibold tracking-widest my-2 lg:text-3xl">Gardeners & nature lovers</h4>
+          <p className="text-gray-600 text-xl lg:text-2xl">Get detailed informations about how, when and where to grow your plants.</p>
+        </div>
+      </div>
+    </>
   );
 };
 

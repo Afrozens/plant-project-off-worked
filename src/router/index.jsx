@@ -7,6 +7,7 @@ import {
   RegisterPage,
   ProfilePage,
   ResetPage,
+  SearchPage
 } from "@/pages";
 import { ProtectedRoute, Layout } from "@/components";
 
@@ -51,6 +52,14 @@ export const router = createBrowserRouter([
               </ProtectedRoute>
             ),
           },
+          {
+            path: "/search",
+            element: (
+              <ProtectedRoute>
+                <SearchPage />
+              </ProtectedRoute>
+            )
+          }
         ],
       },
     ],
