@@ -1,12 +1,19 @@
+import { useLocation } from "react-router-dom";
 import { useSelector } from "react-redux";
+import Snackbar from '@mui/material/Snackbar';
 import SearchIcon from "@mui/icons-material/Search";
 import MenuBookIcon from '@mui/icons-material/MenuBook';
 import YardIcon from '@mui/icons-material/Yard';
 
+
 const HomePage = () => {
+  const location = useLocation()
   const { userInfo } = useSelector((state) => state.user);
+  const { open, autoHideDuration, message } = useSelector((state) => state.message)
+
   return (
     <>
+      {location.pathname === "/home" && <Snackbar open={open} autoHideDuration={autoHideDuration} message={message} anchorOrigin={{ vertical: 'top', horizontal: 'center' }} />}
       <div className="flex w-full h-12 justify-between">
         <h4 className="text-lg tracking-widest text-gray-500 mr-16">Home /</h4>
         <h4 className="text-lg tracking-widest">

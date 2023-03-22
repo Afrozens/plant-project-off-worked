@@ -11,7 +11,8 @@ export const signin = (email, password) =>
 export const signup = (email, password) =>
   createUserWithEmailAndPassword(auth, email, password);
 
-export const updateUser = (username) =>
+export const updateUser = (username, photoURL = null) =>
   updateProfile(auth.currentUser, {
     displayName: username,
+    photoURL: photoURL,
   });

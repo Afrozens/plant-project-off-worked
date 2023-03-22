@@ -23,6 +23,7 @@ const AuthProvider = ({ children }) => {
         email: currentUser?.email,
         username: currentUser?.displayName,
         uid: currentUser?.uid,
+        photoURL: currentUser?.photoURL
       });
     });
 

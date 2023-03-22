@@ -45,12 +45,6 @@ const ResetPage = () => {
       [e.target.name]: e.target.value,
     });
   };
-  /* 
-  const handleGoLogin = () => {
-    setIsAccept(false);
-    navigate("/login");
-  };
- */
   return (
     <>
       <Container component="main" maxWidth="xs">

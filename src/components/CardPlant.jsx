@@ -16,9 +16,8 @@ const CardPlant = forwardRef(({ plant }, ref) => {
   const plantBody = (
     <>
       <div
-        className={`${
-          pulsing ? "pulse" : ""
-        } overflow-hidden max-auto shadow-lg rounded-md my-2`}
+        className={`${pulsing ? "pulse" : ""
+          } overflow-hidden max-auto shadow-lg rounded-md my-2`}
         style={{ width: "100%", background: "#ccc" }}
       >
         <CardActionArea>
@@ -33,16 +32,16 @@ const CardPlant = forwardRef(({ plant }, ref) => {
             }}
             transition={
               ({ height: { delay: 0, duration: 0.4 } },
-              { opacity: { delay: 0.5, duration: 0.4 } })
+                { opacity: { delay: 0.5, duration: 0.4 } })
             }
             onLoad={imageLoaded}
           />
-          <div className="flex flex-col gap-2 mt-4">
-          <span className="tracking-[0.2rem] text-md font-bold uppercase">
-            {common_name}
-          </span>
-          <span className="font-semibold  text-gray-300">{scientific_name}</span>
-        </div>
+          <div className="flex flex-col gap-2 mt-4 bg-white w-4/5 mx-auto">
+            <span className="tracking-[0.2rem] text-md font-bold uppercase">
+              {common_name}
+            </span>
+            <span className="font-semibold">{scientific_name}</span>
+          </div>
         </CardActionArea>
       </div>
     </>

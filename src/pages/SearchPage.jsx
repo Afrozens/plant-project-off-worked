@@ -26,7 +26,6 @@ const SearchPage = () => {
       pages: [...plantsData.pages].reverse(),
       pageParams: [...plantsData.pageParams].reverse()
     }),
-    cacheTime: 0,
     staleTime: 0
   });
 

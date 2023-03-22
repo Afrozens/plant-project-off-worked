@@ -1,6 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
+import { userRegister } from "@/app/features/user/userActions";
+import { useSnackbar } from "notistack";
+import { hiddenMessage, showMessage } from "../app/features/message/messageSlice";
+import { getValidationError } from "../utilities/getValidationError";
 import {
   Avatar,
   Button,
@@ -15,7 +19,6 @@ import {
   Container,
 } from "@mui/material";
 import GrassIcon from "@mui/icons-material/Grass";
-import { userRegister } from "@/app/features/user/userActions";
 
 const initialStateRegister = {
   username: "",
@@ -25,10 +28,10 @@ const initialStateRegister = {
 
 const RegisterPage = () => {
   const [register, setRegister] = useState(initialStateRegister);
-  const [error, setError] = useState("");
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { success } = useSelector((state) => state.user);
+  const { enqueueSnackbar } = useSnackbar()
+  const { success, loading, error } = useSelector((state) => state.user);
 
   useEffect(() => {
     if (success) {
@@ -45,10 +48,20 @@ const RegisterPage = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setError("");
+
     dispatch(userRegister(register));
+    dispatch(showMessage("You have successfully registered"))
+    setTimeout(() => {
+      dispatch(hiddenMessage())
+    }, 5000);
+
+    setTimeout(() => {
+      if (error && !success) {
+        enqueueSnackbar(getValidationError(error), { variant: "error" })
+      }
+    }, 1200);
+    //clean state
     setRegister(initialStateRegister);
-    navigate("/home");
   };
 
   return (
@@ -69,11 +82,7 @@ const RegisterPage = () => {
           <Typography component="h1" variant="h5">
             Sign up
           </Typography>
-          {error && (
-            <Alert variant="filled" severity="error">
-              {error.message}
-            </Alert>
-          )}
+
           <Box
             component="form"
             noValidate
@@ -87,6 +96,7 @@ const RegisterPage = () => {
                   name="username"
                   required
                   fullWidth
+                  error={Boolean(error)}
                   id="username"
                   label="Username"
                   onChange={handleChange}
@@ -100,6 +110,7 @@ const RegisterPage = () => {
                   id="email"
                   label="Email Address"
                   name="email"
+                  error={Boolean(error)}
                   autoComplete="email"
                   onChange={handleChange}
                   value={register.email}
@@ -113,6 +124,7 @@ const RegisterPage = () => {
                   label="Password"
                   type="password"
                   id="password"
+                  error={Boolean(error)}
                   autoComplete="new-password"
                   onChange={handleChange}
                   value={register.password}
@@ -124,6 +136,7 @@ const RegisterPage = () => {
               fullWidth
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
+              disabled={loading}
             >
               Sign Up
             </Button>

@@ -11,6 +11,7 @@ const initialState = {
     username: "",
     email: "",
     uid: null,
+    photoURL: ""
   },
   jwtToken,
   error: null,
@@ -35,9 +36,17 @@ const userSlice = createSlice({
         username: payload.username,
         email: payload.email,
         uid: payload.uid,
+        photoURL: payload.photoURL
       };
       state.success = true;
     },
+    userUpdate: (state, {payload}) => {
+      state.loading = false;
+      state.userInfo = {
+        username: payload.username,
+        photoURL: payload.photoURL
+      }
+    }
   },
   extraReducers: (builder) => {
     builder
@@ -80,5 +89,5 @@ const userSlice = createSlice({
   },
 });
 
-export const { userLogout, userGet } = userSlice.actions;
+export const { userLogout, userGet, userUpdate } = userSlice.actions;
 export default userSlice.reducer;

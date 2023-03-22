@@ -2,6 +2,8 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { userLogin } from "@/app/features/user/userActions";
+import { hiddenMessage, showMessage } from "../app/features/message/messageSlice";
+import { getValidationError } from "../utilities/getValidationError";
 import {
   Avatar,
   Button,
@@ -13,11 +15,11 @@ import {
   Grid,
   Box,
   Typography,
-  Alert,
   Container,
 } from "@mui/material";
 import GrassIcon from "@mui/icons-material/Grass";
 
+import { useSnackbar } from "notistack";
 const initialStateLogin = {
   email: "",
   password: "",
@@ -25,11 +27,10 @@ const initialStateLogin = {
 
 const LoginPage = () => {
   const [login, setLogin] = useState(initialStateLogin);
-  const [loginError, setLoginError] = useState("");
   const dispatch = useDispatch();
   const { success, loading, error } = useSelector((state) => state.user);
   const navigate = useNavigate();
-
+  const { enqueueSnackbar } = useSnackbar()
   useEffect(() => {
     if (success) {
       navigate("/home");
@@ -45,15 +46,21 @@ const LoginPage = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setLoginError("");
+
     dispatch(userLogin(login));
+    dispatch(showMessage("You are logged in correctly"))
+    setTimeout(() => {
+      dispatch(hiddenMessage())
+    }, 5000);
+
+    setTimeout(() => {
+      if (error && !success) {
+        enqueueSnackbar(getValidationError(error), { variant: "error" })
+      }
+    }, 1200);
+    //clean states
     setLogin(initialStateLogin);
 
-    if (error === "auth/internal-error") {
-      setLoginError("Invalid email");
-    } else if (error === "auth/wrong-password") {
-      setLoginError("Wrong password");
-    } //more validations here!
   };
 
   return (
@@ -75,12 +82,6 @@ const LoginPage = () => {
             Sign in
           </Typography>
 
-          {error && (
-            <Alert variant="filled" severity="error">
-              {loginError}
-            </Alert>
-          )}
-
           <Box
             component="form"
             onSubmit={handleSubmit}
@@ -95,6 +96,7 @@ const LoginPage = () => {
               label="Email Address"
               name="email"
               autoComplete="email"
+              error={Boolean(error)}
               autoFocus
               value={login.email}
               onChange={handleChange}
@@ -107,6 +109,7 @@ const LoginPage = () => {
               label="Password"
               type="password"
               id="password"
+              error={Boolean(error)}
               autoComplete="current-password"
               value={login.password}
               onChange={handleChange}
@@ -127,9 +130,9 @@ const LoginPage = () => {
             <Grid container>
               <Grid item xs>
                 <Link
+                  sx={{ cursor: "pointer" }}
                   variant="body2"
                   onClick={() => navigate("/reset-password")}
-                  component="button"
                 >
                   Forgot password?
                 </Link>
@@ -137,8 +140,8 @@ const LoginPage = () => {
               <Grid item>
                 <Link
                   variant="body2"
+                  sx={{ cursor: "pointer" }}
                   onClick={() => navigate("/register")}
-                  component="button"
                 >
                   Don't have an account? Sign Up
                 </Link>

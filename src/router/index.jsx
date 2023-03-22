@@ -1,20 +1,25 @@
+import { lazy, Suspense } from "react";
 import { createBrowserRouter } from "react-router-dom";
+import { ProtectedRoute, PublicLayout, Loader } from "@/components";
 import {
   ErrorPage,
   HomePage,
-  LandingPage,
-  LoginPage,
-  RegisterPage,
   ProfilePage,
-  ResetPage,
-  SearchPage
+  ResetPage
 } from "@/pages";
-import { ProtectedRoute, Layout } from "@/components";
+
+const LandingPage = lazy(() => import("../pages/LandingPage"))
+const LoginPage = lazy(() => import("../pages/LoginPage"))
+const RegisterPage = lazy(() => import("../pages/RegisterPage"))
+const SearchPage = lazy(() => import("../pages/SearchPage"))
 
 export const router = createBrowserRouter([
   {
     path: "/",
-    element: <Layout />,
+    element: (
+      <Suspense fallback={<Loader />} >
+        <PublicLayout />
+      </Suspense>),
     errorElement: <ErrorPage />,
     children: [
       {
@@ -55,6 +60,7 @@ export const router = createBrowserRouter([
           {
             path: "/search",
             element: (
+
               <ProtectedRoute>
                 <SearchPage />
               </ProtectedRoute>

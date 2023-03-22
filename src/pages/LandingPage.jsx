@@ -1,19 +1,44 @@
+import { motion } from "framer-motion";
 import { Grid, Button } from "@mui/material";
 import ArrowRightAltIcon from "@mui/icons-material/ArrowRightAlt";
 import plantImage from "@/assets/plant-one.png";
 import plantImageTwo from "@/assets/plant-two.png";
 import plantImageThree from "@/assets/plant-three.png";
 import plantImageFour from "@/assets/plant-four.png";
+import { useState } from "react";
 
-const LandingPage = () => { 
+const LandingPage = () => {
+  const [imageLoading, setImageLoading] = useState(true);
+  const [pulsing, setPulsing] = useState(true);
+
+  const imageLoaded = () => {
+    setImageLoading(false);
+    setTimeout(() => setPulsing(false), 600);
+  };
   return (
     <>
       <Grid container paddingBottom={"6rem"}>
         <Grid item xs={12} sm={6} paddingBottom={"1rem"}>
-          <img
+          <div
+            className={`${pulsing ? "pulse" : ""
+              } overflow-hidden max-auto my-2`}
+            style={{ width: "100%" }}
+          >
+            <motion.img
             src={plantImage}
             alt="plant image"
+            initial={{ height: "200px", opacity: 0 }}
+            animate={{
+              height: imageLoading ? "200px" : "auto",
+              opacity: imageLoading ? 0 : 1,
+            }}
+            transition={
+              ({ height: { delay: 0, duration: 0.4 } },
+              { opacity: { delay: 0.5, duration: 0.4 } })
+            }
+            onLoad={imageLoaded}
           />
+          </div>
         </Grid>
         <Grid item xs={12} sm={6} paddingBottom={"1rem"} paddingTop={"2rem"}>
           <h1 className="text-3xl font-bold leading-10 tracking-widest mb-4 md:text-4xl lg:text-6xl lg:leading-[5rem] lg:tracking-[0.3rem]">
@@ -36,7 +61,7 @@ const LandingPage = () => {
         <Grid item xs={12}>
           <h2 className="text-xl font-bold text-center leading-10 tracking-widest mb-2 md:text-2xl">
             <a
-              href="https://trefle.io/"
+              href="https://perenual.com/docs/api"
               className="hover:underline hover:decoration-lime-700 text-[#C2EBC5]"
             >
               PLANT DATABASE TREFLE

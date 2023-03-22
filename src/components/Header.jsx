@@ -20,17 +20,14 @@ import getAvatarString from "../utilities/getAvatarString"
 
 export default function MenuAppBar() {
   const [anchorEl, setAnchorEl] = useState(null);
-  const { success, userInfo } = useSelector((state) => state.user);
+  const { success, userInfo, loading, jwtToken } = useSelector((state) => state.user);
   const { logout, user, accessToken } = useContext(AuthContext);
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { jwtToken } = useSelector((state) => state.user);
-
   useEffect(() => {
     if (accessToken) {
       if (jwtToken /*  === accessToken */) {
         dispatch(userGet(user));
-        console.log(user);
       }
     }
   }, [accessToken]);
@@ -66,7 +63,7 @@ export default function MenuAppBar() {
       <AppBar position="static" color="primary" sx={{ zIndex: "99" }}>
         <Toolbar>
           <Box component="button" sx={{ marginRight: "2rem" }}>
-            <Drawer />
+            {!loading && <Drawer />}
           </Box>
           <Typography
             variant="h6"
@@ -74,44 +71,46 @@ export default function MenuAppBar() {
           >
             <b className="text-[#C6EBC5] text-2xl uppercase">🪴Plant</b>Project
           </Typography>
-          {success ? (
-            <div>
-              <IconButton
-                size="large"
-                aria-label="account of current user"
-                aria-controls="menu-appbar"
-                aria-haspopup="true"
-                onClick={handleMenu}
-                color="inherit"
-              >
-                <Badge color="success" variant="dot">
-                  <Avatar {...getAvatarString(`${userInfo.username}`)} />
-                </Badge>
-              </IconButton>
-              <Menu
-                id="menu-appbar"
-                anchorEl={anchorEl}
-                anchorOrigin={{
-                  vertical: "top",
-                  horizontal: "right",
-                }}
-                keepMounted
-                transformOrigin={{
-                  vertical: "top",
-                  horizontal: "right",
-                }}
-                open={Boolean(anchorEl)}
-                onClose={handleClose}
-              >
-                <MenuItem onClick={handleProfile}>Profile</MenuItem>
-                <MenuItem onClick={handleLogout}>Logout</MenuItem>
-              </Menu>
-            </div>
-          ) : (
-            <Button color="inherit" onClick={() => navigate("/login")}>
-              Login
-            </Button>
-          )}
+          {!loading && <div>
+            {success ? (
+              <div>
+                <IconButton
+                  size="large"
+                  aria-label="account of current user"
+                  aria-controls="menu-appbar"
+                  aria-haspopup="true"
+                  onClick={handleMenu}
+                  color="inherit"
+                >
+                  <Badge color="success" variant="dot">
+                    {userInfo.photoURL ? <Avatar src={userInfo.photoURL} alt={`profile icon of ${userInfo.username}`} /> : <Avatar {...getAvatarString(`${userInfo.username}`)} />}
+                  </Badge>
+                </IconButton>
+                <Menu
+                  id="menu-appbar"
+                  anchorEl={anchorEl}
+                  anchorOrigin={{
+                    vertical: "top",
+                    horizontal: "right",
+                  }}
+                  keepMounted
+                  transformOrigin={{
+                    vertical: "top",
+                    horizontal: "right",
+                  }}
+                  open={Boolean(anchorEl)}
+                  onClose={handleClose}
+                >
+                  <MenuItem onClick={handleProfile}>Profile</MenuItem>
+                  <MenuItem onClick={handleLogout}>Logout</MenuItem>
+                </Menu>
+              </div>
+            ) : (
+              <Button color="inherit" onClick={() => navigate("/login")}>
+                Login
+              </Button>
+            )}
+          </div>}
         </Toolbar>
       </AppBar>
     </Box>
