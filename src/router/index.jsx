@@ -5,7 +5,6 @@ import {
   ErrorPage,
   HomePage,
   ProfilePage,
-  ResetPage
 } from "@/pages";
 
 const LandingPage = lazy(() => import("../pages/LandingPage"))
@@ -32,10 +31,6 @@ export const router = createBrowserRouter([
           {
             path: "/login",
             element: <LoginPage />,
-          },
-          {
-            path: "/reset-password",
-            element: <ResetPage />,
           },
           {
             path: "/register",

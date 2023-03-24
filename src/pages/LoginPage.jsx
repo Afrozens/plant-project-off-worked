@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { userLogin } from "@/app/features/user/userActions";
 import { hiddenMessage, showMessage } from "../app/features/message/messageSlice";
@@ -30,12 +30,19 @@ const LoginPage = () => {
   const dispatch = useDispatch();
   const { success, loading, error } = useSelector((state) => state.user);
   const navigate = useNavigate();
+  const location = useLocation()
   const { enqueueSnackbar } = useSnackbar()
   useEffect(() => {
-    if (success) {
+    if (success && location.pathname === "/login") {
       navigate("/home");
     }
   }, [navigate, success]);
+
+  useEffect(()=> {
+    if (error && !success) {
+      enqueueSnackbar(getValidationError(error), { variant: "error" })
+    }
+  }, [error])
 
   const handleChange = (e) => {
     setLogin({
@@ -52,12 +59,6 @@ const LoginPage = () => {
     setTimeout(() => {
       dispatch(hiddenMessage())
     }, 5000);
-
-    setTimeout(() => {
-      if (error && !success) {
-        enqueueSnackbar(getValidationError(error), { variant: "error" })
-      }
-    }, 1200);
     //clean states
     setLogin(initialStateLogin);
 
@@ -114,10 +115,6 @@ const LoginPage = () => {
               value={login.password}
               onChange={handleChange}
             />
-            <FormControlLabel
-              control={<Checkbox value="remember" color="primary" />}
-              label="Remember me"
-            />
             <Button
               type="submit"
               fullWidth
@@ -128,15 +125,6 @@ const LoginPage = () => {
               Sign In
             </Button>
             <Grid container>
-              <Grid item xs>
-                <Link
-                  sx={{ cursor: "pointer" }}
-                  variant="body2"
-                  onClick={() => navigate("/reset-password")}
-                >
-                  Forgot password?
-                </Link>
-              </Grid>
               <Grid item>
                 <Link
                   variant="body2"

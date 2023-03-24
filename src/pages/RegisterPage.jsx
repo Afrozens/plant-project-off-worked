@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { userRegister } from "@/app/features/user/userActions";
 import { useSnackbar } from "notistack";
-import { hiddenMessage, showMessage } from "../app/features/message/messageSlice";
-import { getValidationError } from "../utilities/getValidationError";
+import { hiddenMessage, showMessage } from "@/app/features/message/messageSlice";
+import { getValidationError } from "@/utilities/getValidationError";
 import {
   Avatar,
   Button,
@@ -29,16 +29,22 @@ const initialStateRegister = {
 const RegisterPage = () => {
   const [register, setRegister] = useState(initialStateRegister);
   const navigate = useNavigate();
+  const location = useLocation()
   const dispatch = useDispatch();
   const { enqueueSnackbar } = useSnackbar()
   const { success, loading, error } = useSelector((state) => state.user);
-
+//if there's success in the register
   useEffect(() => {
-    if (success) {
+    if (success && location.pathname === "/register") {
       navigate("/home");
     }
   }, [navigate, success]);
-
+//if there's error in the register
+  useEffect(()=> {
+    if (error && !success) {
+      enqueueSnackbar(getValidationError(error), { variant: "error" })
+    }
+  }, [error])
   const handleChange = (e) => {
     setRegister({
       ...register,
@@ -54,12 +60,6 @@ const RegisterPage = () => {
     setTimeout(() => {
       dispatch(hiddenMessage())
     }, 5000);
-
-    setTimeout(() => {
-      if (error && !success) {
-        enqueueSnackbar(getValidationError(error), { variant: "error" })
-      }
-    }, 1200);
     //clean state
     setRegister(initialStateRegister);
   };

@@ -39,8 +39,9 @@ const userSlice = createSlice({
         photoURL: payload.photoURL
       };
       state.success = true;
+      state.error = null;
     },
-    userUpdate: (state, {payload}) => {
+    userUpdate: (state, { payload }) => {
       state.loading = false;
       state.userInfo = {
         username: payload.username,

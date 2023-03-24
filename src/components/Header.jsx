@@ -3,6 +3,7 @@ import { useContext, useEffect, useState } from "react";
 import AuthContext from "@/contexts/AuthContext";
 import { userLogout, userGet } from "@/app/features/user/userSlice";
 import { useDispatch, useSelector } from "react-redux";
+import getAvatarString from "@/utilities/getAvatarString"
 import Drawer from "./Drawer";
 import {
   AppBar,
@@ -16,7 +17,6 @@ import {
   Avatar,
   Badge
 } from "@mui/material";
-import getAvatarString from "../utilities/getAvatarString"
 
 export default function MenuAppBar() {
   const [anchorEl, setAnchorEl] = useState(null);
@@ -26,7 +26,7 @@ export default function MenuAppBar() {
   const dispatch = useDispatch();
   useEffect(() => {
     if (accessToken) {
-      if (jwtToken /*  === accessToken */) {
+      if (jwtToken  === accessToken) {
         dispatch(userGet(user));
       }
     }
