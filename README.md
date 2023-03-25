@@ -36,7 +36,7 @@ npm install
 - 3) Raising the development server
 ```
 npm run dev
-``
+````
 ### Implement in the future:
 - History page. Implement search history of the user logged in to Firebase.(**NO-CHECKED**).
 - Display all the specifications of the specific plant that the user wants to know about (**NO-CHECKED**)
